@@ -30,7 +30,11 @@ const Login = () => {
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
-        <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
+        <img
+          src="pngwing.com.png"
+          alt="img"
+          style={{ width: "400px", marginLeft: "200px" }}
+        />
       </Box>
       <Box
         display={"flex"}
@@ -39,6 +43,7 @@ const Login = () => {
         alignItems={"center"}
         padding={2}
         ml={"auto"}
+        mr={"auto"}
         // mt={16}
       >
         <form
@@ -75,12 +80,17 @@ const Login = () => {
                 py: 1,
                 mt: 2,
                 width: "400px",
-                borderRadius: 50,
-                bgcolor: "#00fffc",
-                color: "black",
+                borderRadius: 2,
+                background: `linear-gradient(to top, #51538f 0%, #00fffc 100%)`, // Set a linear gradient
+                backgroundSize: "200% 200%", // Double the background size to allow smooth shifting
+                backgroundPosition: "left bottom", // Initial position for the gradient
+                transition:
+                  "background-position 0.5s ease, color 0.3s, text-shadow 0.3s", // Transition for position change
+                color: "white",
                 ":hover": {
-                  bgcolor: "white",
-                  color: "black",
+                  backgroundPosition: "right top", // New position for hover to create the shift
+                  color: "white",
+                  textShadow: "0 0 8px white, 0 0 12px white, 0 0 16px white", // Glowing effect
                 },
               }}
               endIcon={<IoIosLogIn />}

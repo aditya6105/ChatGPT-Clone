@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-
 const Logo = () => {
   return (
     <div
