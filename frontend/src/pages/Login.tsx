@@ -30,11 +30,15 @@ const Login = () => {
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
+<<<<<<< HEAD
         <img
           src="pngwing.com.png"
           alt="img"
           style={{ width: "400px", marginLeft: "200px" }}
         />
+=======
+        <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
+>>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
       </Box>
       <Box
         display={"flex"}
@@ -43,7 +47,10 @@ const Login = () => {
         alignItems={"center"}
         padding={2}
         ml={"auto"}
+<<<<<<< HEAD
         mr={"auto"}
+=======
+>>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
         // mt={16}
       >
         <form
@@ -80,6 +87,7 @@ const Login = () => {
                 py: 1,
                 mt: 2,
                 width: "400px",
+<<<<<<< HEAD
                 borderRadius: 2,
                 background: `linear-gradient(to top, #51538f 0%, #00fffc 100%)`, // Set a linear gradient
                 backgroundSize: "200% 200%", // Double the background size to allow smooth shifting
@@ -91,6 +99,14 @@ const Login = () => {
                   backgroundPosition: "right top", // New position for hover to create the shift
                   color: "white",
                   textShadow: "0 0 8px white, 0 0 12px white, 0 0 16px white", // Glowing effect
+=======
+                borderRadius: 50,
+                bgcolor: "#00fffc",
+                color: "black",
+                ":hover": {
+                  bgcolor: "white",
+                  color: "black",
+>>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
                 },
               }}
               endIcon={<IoIosLogIn />}

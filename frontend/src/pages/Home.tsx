@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+>>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import TypingAnim from "../components/typer/TypingAnim";
 import Footer from "../components/footer/Footer";
@@ -31,7 +34,11 @@ const Home = () => {
           }}
         >
           <img
+<<<<<<< HEAD
             src="ai-robo.png"
+=======
+            src="robot.png"
+>>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
             alt="robot"
             style={{ width: "200px", margin: "auto" }}
           />
