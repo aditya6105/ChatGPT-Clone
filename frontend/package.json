@@ -15,10 +15,7 @@
     "@mui/material": "^6.1.6",
     "@types/react-syntax-highlighter": "^15.5.13",
     "axios": "^1.7.7",
-<<<<<<< HEAD
     "openai": "^4.71.0",
-=======
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",

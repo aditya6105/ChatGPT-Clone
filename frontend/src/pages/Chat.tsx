@@ -162,11 +162,7 @@ const Chat = () => {
           }}
         >
           {chatMessages.map((chat, index) => (
-<<<<<<< HEAD
-            //@ts-ignore
-=======
             // @ts-except-error
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
         </Box>

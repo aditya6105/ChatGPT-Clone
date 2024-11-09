@@ -31,15 +31,11 @@ const Signup = () => {
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
-<<<<<<< HEAD
         <img
           src="airobot.png"
           alt="Robot"
           style={{ width: "400px", marginLeft: "200px" }}
         />
-=======
-        <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
       </Box>
       <Box
         display={"flex"}
@@ -48,12 +44,8 @@ const Signup = () => {
         alignItems={"center"}
         padding={2}
         ml={"auto"}
-<<<<<<< HEAD
         mr={"auto"}
         // mt={16}
-=======
-        mt={16}
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
       >
         <form
           onSubmit={handleSubmit}
@@ -91,7 +83,6 @@ const Signup = () => {
                 mt: 2,
                 width: "400px",
                 borderRadius: 2,
-<<<<<<< HEAD
                 background: `linear-gradient(to top, #51538f 0%, #00fffc 100%)`, // Set a linear gradient
                 backgroundSize: "200% 200%", // Double the background size to allow smooth shifting
                 backgroundPosition: "left bottom", // Initial position for the gradient
@@ -102,12 +93,6 @@ const Signup = () => {
                   backgroundPosition: "right top", // New position for hover to create the shift
                   color: "white",
                   textShadow: "0 0 8px white, 0 0 12px white, 0 0 16px white", // Glowing effect
-=======
-                bgcolor: "#00fffc",
-                ":hover": {
-                  bgcolor: "white",
-                  color: "black",
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
                 },
               }}
               endIcon={<IoIosLogIn />}

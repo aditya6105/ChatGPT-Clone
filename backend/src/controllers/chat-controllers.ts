@@ -2,10 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import { configureOpenAI } from "../config/openai-config.js";
 import { OpenAIApi, ChatCompletionRequestMessage } from "openai";
-<<<<<<< HEAD
-=======
 
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
 export const generateChatCompletion = async (
   req: Request,
   res: Response,
@@ -18,10 +15,7 @@ export const generateChatCompletion = async (
       return res
         .status(401)
         .json({ message: "User not registered OR Token malfunctioned" });
-<<<<<<< HEAD
-=======
 
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
     // grab chats of user
     const chats = user.chats.map(({ role, content }) => ({
       role,
@@ -33,10 +27,7 @@ export const generateChatCompletion = async (
     // send all chats with new one to openAI API
     const config = configureOpenAI();
     const openai = new OpenAIApi(config);
-<<<<<<< HEAD
-=======
-
->>>>>>> 1b2951236337411173891451c6ffa3adaf18c7bc
+    
     // get latest response
     const chatResponse = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
