@@ -8,7 +8,7 @@ node_modules/
 *.log
 
 # Build output
-dist/
+# dist/
 build/
 
 # Operating system files
