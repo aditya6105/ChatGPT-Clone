@@ -4,20 +4,18 @@ import { createToken } from "../utils/token-manager.js";
 import { COOKIE_NAME } from "../utils/constants.js";
 export const getAllUsers = async (req, res, next) => {
     try {
-        // Get all users
+        //get all users
         const users = await User.find();
         return res.status(200).json({ message: "OK", users });
     }
     catch (error) {
         console.log(error);
-        return res
-            .status(500)
-            .json({ message: "ERROR", cause: error.message });
+        return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
 export const userSignup = async (req, res, next) => {
     try {
-        // User signup
+        //user signup
         const { name, email, password } = req.body;
         const existingUser = await User.findOne({ email });
         if (existingUser)
@@ -25,7 +23,7 @@ export const userSignup = async (req, res, next) => {
         const hashedPassword = await hash(password, 10);
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
-        // Create token and store in cookie
+        // create token and store cookie
         res.clearCookie(COOKIE_NAME, {
             httpOnly: true,
             domain: "localhost",
@@ -48,14 +46,12 @@ export const userSignup = async (req, res, next) => {
     }
     catch (error) {
         console.log(error);
-        return res
-            .status(500)
-            .json({ message: "ERROR", cause: error.message });
+        return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
 export const userLogin = async (req, res, next) => {
     try {
-        // User login
+        //user login
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
@@ -65,7 +61,7 @@ export const userLogin = async (req, res, next) => {
         if (!isPasswordCorrect) {
             return res.status(403).send("Incorrect Password");
         }
-        // Create token and store in cookie
+        // create token and store cookie
         res.clearCookie(COOKIE_NAME, {
             httpOnly: true,
             domain: "localhost",
@@ -88,14 +84,12 @@ export const userLogin = async (req, res, next) => {
     }
     catch (error) {
         console.log(error);
-        return res
-            .status(500)
-            .json({ message: "ERROR", cause: error.message });
+        return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
 export const verifyUser = async (req, res, next) => {
     try {
-        // User token check
+        //user token check
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {
             return res.status(401).send("User not registered OR Token malfunctioned");
@@ -109,14 +103,12 @@ export const verifyUser = async (req, res, next) => {
     }
     catch (error) {
         console.log(error);
-        return res
-            .status(500)
-            .json({ message: "ERROR", cause: error.message });
+        return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
 export const userLogout = async (req, res, next) => {
     try {
-        // User token check
+        //user token check
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {
             return res.status(401).send("User not registered OR Token malfunctioned");
@@ -136,9 +128,7 @@ export const userLogout = async (req, res, next) => {
     }
     catch (error) {
         console.log(error);
-        return res
-            .status(500)
-            .json({ message: "ERROR", cause: error.message });
+        return res.status(200).json({ message: "ERROR", cause: error.message });
     }
 };
 //# sourceMappingURL=user-controllers.js.map

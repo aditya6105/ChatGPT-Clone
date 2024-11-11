@@ -1,8 +1,7 @@
 import { connect, disconnect } from "mongoose";
 async function connectToDatabase() {
     try {
-        const mongoUrl = process.env.MONGODB_URL;
-        await connect(mongoUrl);
+        await connect(process.env.MONGODB_URL);
     }
     catch (error) {
         console.log(error);
