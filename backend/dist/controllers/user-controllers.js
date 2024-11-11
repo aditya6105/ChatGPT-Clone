@@ -1,7 +1,8 @@
 import User from "../models/User.js";
-import { hash, compare } from "bcrypt";
+import bcrypt from "bcryptjs";
 import { createToken } from "../utils/token-manager.js";
 import { COOKIE_NAME } from "../utils/constants.js";
+const { hash, compare } = bcrypt;
 export const getAllUsers = async (req, res, next) => {
     try {
         //get all users
