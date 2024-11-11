@@ -1,9 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import { configureOpenAI } from "../config/openai-config.js";
-import { OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import {
+  OpenAIApi,
+  ChatCompletionRequestMessage,
+  ChatCompletionRequestMessageRoleEnum,
+} from "openai";
 import { Types } from "mongoose";
 
+// Generates a new chat completion using OpenAI API
 export const generateChatCompletion = async (
   req: Request,
   res: Response,
@@ -11,7 +16,6 @@ export const generateChatCompletion = async (
 ) => {
   const { message } = req.body;
   try {
-    // Find the user by ID
     const user = await User.findById(res.locals.jwtData.id);
     if (!user) {
       return res
@@ -19,36 +23,48 @@ export const generateChatCompletion = async (
         .json({ message: "User not registered OR Token malfunctioned" });
     }
 
-    // Convert the DocumentArray to a plain array of messages for the OpenAI API
-    const chats = user.chats.map(({ role, content }) => ({
-      role,
-      content,
-    })) as ChatCompletionRequestMessage[];
+    // Initialize `user.chats` as an empty DocumentArray if undefined
+    if (!user.chats) {
+      user.chats = new Types.DocumentArray([]) as unknown as typeof user.chats;
+    }
 
-    // Add the new message to the chats array
-    chats.push({ content: message, role: "user" });
+    // Map `user.chats` to match `ChatCompletionRequestMessage` type
+    const chats: ChatCompletionRequestMessage[] = user.chats
+      ? user.chats.map(({ role, content }) => ({
+          role: role as ChatCompletionRequestMessageRoleEnum, // Cast role to expected enum type
+          content,
+        }))
+      : [];
 
-    // Add the new message to the user's `chats` field (Mongoose DocumentArray)
-    user.chats.push({
+    // Push user message to `chats`
+    chats.push({
+      content: message,
+      role: ChatCompletionRequestMessageRoleEnum.User,
+    });
+
+    user.chats?.push({
       content: message,
       role: "user",
       id: new Types.ObjectId().toString(),
     });
 
-    // Send the updated chat array to OpenAI API
+    // Configure and call OpenAI API
     const config = configureOpenAI();
     const openai = new OpenAIApi(config);
 
-    // Get the response from OpenAI
     const chatResponse = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: chats,
     });
 
+    // Process AI response
     const aiMessage = chatResponse.data.choices[0]?.message;
     if (aiMessage) {
-      // Save the AI response to the user's `chats`
-      user.chats.push(aiMessage);
+      user.chats?.push({
+        content: aiMessage.content,
+        role: aiMessage.role as "user" | "assistant", // Cast the role to match mongoose schema if needed
+        id: new Types.ObjectId().toString(),
+      });
       await user.save();
       return res.status(200).json({ chats: user.chats });
     } else {
@@ -63,5 +79,36 @@ export const generateChatCompletion = async (
     } else {
       return res.status(500).json({ message: "Unknown error occurred" });
     }
+  }
+};
+
+// Deletes all chats for the authenticated user
+export const deleteChats = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    // Clear the chats array
+    user.chats?.splice(0, user.chats.length);
+    await user.save();
+    res.status(200).json({ message: "All chats deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete chats" });
+  }
+};
+
+// Sends all chats to the authenticated user
+export const sendChatsToUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ chats: user.chats || [] });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to retrieve chats" });
   }
 };
