@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+axios.defaults.baseURL = "https://mern-realtime-chatbot.onrender.com/api/v1";
 axios.defaults.withCredentials = true;
 const theme = createTheme({
   typography: {
