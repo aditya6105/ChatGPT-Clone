@@ -7,7 +7,7 @@ import cors from "cors";
 
 config();
 const app = express();
-
+console.log(process.env.CLIENT_ORIGIN);
 // Middlewares
 app.use(
   cors({
