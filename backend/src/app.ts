@@ -16,6 +16,8 @@ app.use(
       "https://chat-gpt-clone-seven-eta.vercel.app", // deployed frontend URL
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow headers typically used in auth requests
   })
 );
 app.options(
