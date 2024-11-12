@@ -7,7 +7,7 @@ import cors from "cors";
 
 config();
 const app = express();
-console.log(process.env.CLIENT_ORIGIN);
+console.log("CLIENT_ORIGIN:", process.env.CLIENT_ORIGIN || "Not set");
 // Middlewares
 app.use(
   cors({
