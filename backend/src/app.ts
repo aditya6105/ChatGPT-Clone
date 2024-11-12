@@ -8,9 +8,12 @@ import cors from "cors";
 config();
 const app = express();
 
-// Define corsOptions with only the production origin
+// Define corsOptions with multiple allowed origins
 const corsOptions = {
-  origin: "https://chat-gpt-clone-seven-eta.vercel.app", // Only allow requests from the Vercel URL
+  origin: [
+    "https://chat-gpt-clone-seven-eta.vercel.app", // First Vercel URL
+    "https://chat-gpt-clone-l1gmlpl82-aditya6105s-projects.vercel.app", // Second Vercel URL
+  ],
   credentials: true,
   optionsSuccessStatus: 200,
 };
