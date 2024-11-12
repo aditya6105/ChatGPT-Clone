@@ -10,7 +10,7 @@ const app = express();
 
 // Allowed origins for CORS (including localhost for development and the deployed frontend for production)
 const allowedOrigins = [
-  // "http://localhost:5173", // Local development frontend
+  "http://localhost:5173", // Local development frontend
   "https://chat-gpt-clone-seven-eta.vercel.app", // Production frontend (Vercel)
 ];
 
@@ -30,6 +30,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"], // Allow headers typically used in auth requests
   })
 );
+
+// Explicitly handle OPTIONS requests for pre-flight CORS
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));

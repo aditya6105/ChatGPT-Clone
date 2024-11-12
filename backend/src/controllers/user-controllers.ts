@@ -6,13 +6,17 @@ import { COOKIE_NAME } from "../utils/constants.js";
 
 const { hash, compare } = bcrypt;
 
+const cookieDomain =
+  process.env.NODE_ENV === "production"
+    ? "chat-gpt-clone-seven-eta.vercel.app"
+    : "localhost";
+
 export const getAllUsers = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    //get all users
     const users = await User.find();
     return res.status(200).json({ message: "OK", users });
   } catch (error) {
@@ -27,7 +31,6 @@ export const userSignup = async (
   next: NextFunction
 ) => {
   try {
-    //user signup
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(401).send("User already registered");
@@ -38,7 +41,7 @@ export const userSignup = async (
     // create token and store cookie
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
+      domain: cookieDomain,
       signed: true,
       path: "/",
     });
@@ -48,7 +51,7 @@ export const userSignup = async (
     expires.setDate(expires.getDate() + 7);
     res.cookie(COOKIE_NAME, token, {
       path: "/",
-      domain: "localhost",
+      domain: cookieDomain,
       expires,
       httpOnly: true,
       signed: true,
@@ -69,7 +72,6 @@ export const userLogin = async (
   next: NextFunction
 ) => {
   try {
-    //user login
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
@@ -81,10 +83,9 @@ export const userLogin = async (
     }
 
     // create token and store cookie
-
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
+      domain: cookieDomain,
       signed: true,
       path: "/",
     });
@@ -94,7 +95,7 @@ export const userLogin = async (
     expires.setDate(expires.getDate() + 7);
     res.cookie(COOKIE_NAME, token, {
       path: "/",
-      domain: "localhost",
+      domain: cookieDomain,
       expires,
       httpOnly: true,
       signed: true,
