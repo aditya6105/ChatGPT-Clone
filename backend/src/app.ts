@@ -17,7 +17,7 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests from allowed origins or no origin (for server-to-server)
+      console.log("Incoming request from origin:", origin); // Log the incoming origin
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
