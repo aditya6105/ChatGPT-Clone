@@ -8,13 +8,15 @@ import cors from "cors";
 config();
 const app = express();
 
+// Define corsOptions with only the production origin
+const corsOptions = {
+  origin: "https://chat-gpt-clone-seven-eta.vercel.app", // Only allow requests from the Vercel URL
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
 // Middlewares
-app.use(
-  cors({
-    origin: "https://chat-gpt-clone-seven-eta.vercel.app", // Set this to the Vercel URL for production, or localhost for local testing
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions)); // Use corsOptions here
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
