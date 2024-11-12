@@ -18,6 +18,13 @@ app.use(
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+// Temporary Test Route for CLIENT_ORIGIN
+app.get("/check-origin", (req, res) => {
+  res.send(
+    `CLIENT_ORIGIN is set to: ${process.env.CLIENT_ORIGIN || "Not set"}`
+  );
+});
+
 // Log requests in development
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
