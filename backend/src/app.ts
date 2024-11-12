@@ -11,7 +11,10 @@ const app = express();
 //middlewares
 app.use(
   cors({
-    origin: "https://chat-gpt-clone-seven-eta.vercel.app", // deployed frontend URL
+    origin: [
+      "http://localhost:5173",
+      "https://chat-gpt-clone-seven-eta.vercel.app", // deployed frontend URL
+    ],
     credentials: true,
   })
 );
