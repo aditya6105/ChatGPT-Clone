@@ -11,7 +11,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: true, // Set this to the Vercel URL for production, or localhost for local testing
+    origin: "https://chat-gpt-clone-seven-eta.vercel.app", // Set this to the Vercel URL for production, or localhost for local testing
     credentials: true,
   })
 );
