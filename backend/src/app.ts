@@ -18,25 +18,16 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // If origin is undefined (i.e., it's a local or direct request), allow it
+      // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the request
+        callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS")); // Reject the request
+        callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true, // Allow credentials (cookies, authorization headers)
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow headers typically used in auth requests
-  })
-);
-
-// Preflight OPTIONS support
-app.options(
-  "*",
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
   })
 );
 
