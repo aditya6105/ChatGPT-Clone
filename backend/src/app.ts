@@ -18,6 +18,16 @@ app.use(
     credentials: true,
   })
 );
+app.options(
+  "*",
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://chat-gpt-clone-seven-eta.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
