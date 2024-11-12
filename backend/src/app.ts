@@ -10,7 +10,7 @@ const app = express();
 
 // Allowed origins for CORS (including localhost for development and the deployed frontend for production)
 const allowedOrigins = [
-  "http://localhost:5173", // Local development frontend
+  // "http://localhost:5173", // Local development frontend
   "https://chat-gpt-clone-seven-eta.vercel.app", // Production frontend (Vercel)
 ];
 
