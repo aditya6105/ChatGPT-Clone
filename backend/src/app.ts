@@ -8,36 +8,35 @@ import cors from "cors";
 config();
 const app = express();
 
-// Allowed origins for CORS (including localhost for development and the deployed frontend for production)
-const allowedOrigins = [
-  "http://localhost:5173", // Local development frontend
-  "https://chat-gpt-clone-seven-eta.vercel.app", // Production frontend (Vercel)
-];
+// Define allowed origins
+const allowedOrigins = new Set([
+  "http://localhost:5173",
+  "https://chat-gpt-clone-seven-eta.vercel.app",
+]);
 
-// CORS middleware configuration
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // Allow credentials (cookies, authorization headers)
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie"], // Allow headers typically used in auth requests
-  })
-);
+// Middleware to handle CORS headers and preflight
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+    );
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+
+    // Return early for OPTIONS requests
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(200); // Use 200 OK instead of 204 No Content
+    }
+  }
+  next();
+});
 
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-
-// Development logging (remove in production)
 app.use(morgan("dev"));
-
-// Route handling
 app.use("/api/v1", appRouter);
 
 export default app;
