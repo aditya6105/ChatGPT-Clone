@@ -23,6 +23,20 @@ app.use(cors(corsOptions)); // Use corsOptions here
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+// Additional middleware to handle preflight requests for CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 // Log requests in development
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
